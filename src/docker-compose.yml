@@ -1,0 +1,33 @@
+# docker-compose.yml
+# define the Docker services that will run the Angular applications and the NGINX server
+
+version: "3"
+
+services:
+  app-a:
+    image: app-a:latest
+    networks:
+      - app-network
+
+  app-b:
+    image: app-b:latest
+    networks:
+      - app-network
+
+  app-c:
+    image: app-c:latest
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:1.19
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: overlay
